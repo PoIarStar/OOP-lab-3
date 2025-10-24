@@ -7,6 +7,11 @@ using std::string;
 using std::istream;
 using std::ostream;
 
+
+#define EPS 10e-6
+#define GREATER(x, y)(y - x < EPS)
+#define EQUAL(x, y)(y - x < EPS && x - y < EPS)
+
 class Money
 {
 protected:
@@ -16,10 +21,12 @@ public:
 	Money(double summ);
 	Money(int kop1_, int kop5_, int kop10_, int kop50_, int rub1_, int rub2_, int rub5_, int rub10_, int rub50_, int rub100_, int rub500_, int rub1000_, int rub5000_);
 	Money& operator=(Money& other);
+	Money& operator=(Money other);
 	~Money();
 
-	double to_double();
-	string toString();
+	double to_double() const;
+	void from_double(double value);
+	string toString() const;
 
 	int get_kop1();
 	int get_kop5();
@@ -51,9 +58,8 @@ public:
 
 	Money operator+(Money other) const;
 	Money operator-(Money other) const;
-
-	Money& operator+=(Money other);
-	Money& operator-=(Money other);
+	Money operator*(double other) const;
+	Money operator/(double other) const;
 
 	bool operator==(Money other) const;
 	bool operator!=(Money other) const;
@@ -66,4 +72,3 @@ public:
 	friend istream& operator>>(istream& is, Money& money);
 
 };
-
